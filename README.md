@@ -183,6 +183,102 @@ $this->registerJs($js);
 ---
 
 
+#### 4. Модификация контроллера
+
+Модифицируем внешний вид страницы просмотра заявки 
+1. Откройте файл `views/requests/view.php`
+2. Замените прямые поля на формат relationName.attributeName:
+
+```php
+
+<?php
+
+use yii\helpers\Html;
+use yii\widgets\DetailView;
+
+/** @var yii\web\View $this */
+/** @var app\models\Request $model */
+
+$this->title = 'Заявка №' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Заявки', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
+\yii\web\YiiAsset::register($this);
+?>
+<div class="request-view">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>
+        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Вы уверены что хотите удалить заявку?',
+                'method' => 'post',
+            ],
+        ]) ?>
+    </p>
+
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+        
+        [
+            'attribute' => 'user_id',
+            'value' => $model->user->full_name, 
+            'label' => 'ФИО'
+        ],
+         [
+            'attribute' => 'address',
+            'label' => 'Адрес'
+         ],
+        [
+            'attribute' => 'phone',
+            'label' => 'Телефон'
+         ],
+        [
+            'attribute' => 'service_id',
+            'value' => $model->service->type, 
+            'label' => 'Тип услуги',
+            'visible' => empty($model->custom_service) // Показываем только если нет значения
+        ],
+        [
+            'attribute' => 'custom_service',
+            'label' => 'Тип услуги',
+            'visible' => !empty($model->custom_service) // Показываем только если есть значение
+        ],
+        [
+            'attribute' => 'desired_date',
+            'label' => 'Дата создания',
+            'format' => ['datetime', 'php:d.m.Y H:i'] // Красивое форматирование даты
+        ],
+        [
+            'attribute' => 'payment_id',
+            'value' => $model->payment->type, // предполагая relation getPaymentType()
+            'label' => 'Способ оплаты'
+        ],
+        [
+            'attribute' => 'status_id',
+            'value' => $model->status->type,
+            'label' => 'Статус'
+        ],
+        [
+            'attribute' => 'cancel_reason',
+            'visible' => $model->status_id == 3 // Показываем только для отмененных заявок
+        ],
+    ],
+    ]) ?>
+
+</div>
+
+```
+
+![image](https://github.com/user-attachments/assets/8c478c16-2408-4fa6-b89a-19930dbb3f5e)
+
+
+--- 
+
+
 ### Итог
 
 Мы:
