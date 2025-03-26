@@ -8,7 +8,7 @@
 public function rules()
 {
    return [
-            [['address', 'phone', 'service_id', 'custom_service', 'payment_id'], 'required'],
+            [['address', 'phone', 'service_id', 'payment_id'], 'required'],
             [['service_id', 'payment_id', 'status_id'], 'integer'],
             [['custom_service'], 'string'],
             [['address'], 'string', 'max' => 255],
