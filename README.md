@@ -287,3 +287,6 @@ $this->params['breadcrumbs'][] = $this->title;
 2. Настроили отображение связанных данных
 3. Добавили динамическое поведение формы
 
+
+### Следующая лекция
+### [Предыдущая лекция](https://github.com/petrocollege-web/7.-Menu-and-content)
