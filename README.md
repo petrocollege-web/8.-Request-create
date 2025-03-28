@@ -288,5 +288,5 @@ $this->params['breadcrumbs'][] = $this->title;
 3. Добавили динамическое поведение формы
 
 
-### Следующая лекция
+### [Следующая лекция](https://github.com/petrocollege-web/9.-Admin-change-status)
 ### [Предыдущая лекция](https://github.com/petrocollege-web/7.-Menu-and-content)
